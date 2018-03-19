@@ -1,5 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Provider, Client } from 'urql';
+import Home from './src/screens/Home';
+
+const client = new Client({
+  url: 'http://192.168.1.8:8080/graphql',
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -12,14 +18,16 @@ const styles = StyleSheet.create({
 
 export default class App extends React.Component {
   componentDidMount() {
-    console.log('💯');
+    // console.log('💯');
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Rick and Morty</Text>
-      </View>
+      <Provider client={client}>
+        <View style={styles.container}>
+          <Home />
+        </View>
+      </Provider>
     );
   }
 }
