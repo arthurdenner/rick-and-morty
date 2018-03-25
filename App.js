@@ -1,33 +1,37 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StatusBar, StyleSheet, View } from 'react-native';
+import { ThemeProvider } from 'styled-components';
 import { Provider, Client } from 'urql';
-import Home from './src/screens/Home';
+import Characters from './src/screens/Characters';
 
 const client = new Client({
-  url: 'http://192.168.1.8:8080/graphql',
+  url: 'https://rickandmortyapi-gql.now.sh/graphql',
 });
 
+const theme = {};
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  app: {
+    paddingTop: StatusBar.currentHeight,
   },
 });
 
-export default class App extends React.Component {
+class App extends React.Component {
   componentDidMount() {
     // console.log('💯');
   }
 
   render() {
     return (
-      <Provider client={client}>
-        <View style={styles.container}>
-          <Home />
-        </View>
-      </Provider>
+      <ThemeProvider theme={theme}>
+        <Provider client={client}>
+          <View style={styles.app}>
+            <Characters />
+          </View>
+        </Provider>
+      </ThemeProvider>
     );
   }
 }
+
+export default App;
