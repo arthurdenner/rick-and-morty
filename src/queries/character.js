@@ -14,3 +14,20 @@ export const GET_CHARACTERS = `
     }
   }
 `;
+
+export const SINGLE_CHARACTER = `
+  query getSingleCharacter($id: Int!) {
+    character(id: $id) {
+      species
+      type
+      status
+      location {
+        name
+      }
+      origin {
+        name
+      }
+      gender
+    }
+  }
+`;

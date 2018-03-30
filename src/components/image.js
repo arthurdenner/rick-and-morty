@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Image = styled.Image`
-  height: 100px;
+  height: ${props => props.height || 100}px;
   border-radius: 3px;
 `;
 
