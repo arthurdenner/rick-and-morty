@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import { FlatList, Text, View } from 'react-native';
+import PropTypes from 'prop-types';
 import { Connect, query } from 'urql';
 import { GridItem, FooterList, Header, Image, Subtitle } from '../components';
 import { GET_CHARACTERS } from '../queries/character';
 import { windowHeight } from '../utils/dimensions';
 
 class Characters extends Component {
+  static propTypes = {
+    navigation: PropTypes.object.isRequired,
+  };
+
   state = {
     currentPage: 1,
   };
@@ -26,6 +31,12 @@ class Characters extends Component {
     const { currentPage } = this.state;
 
     this.getPage(currentPage + 1);
+  };
+
+  handleCharacterClick = character => {
+    const { navigation: { navigate } } = this.props;
+
+    navigate('SingleCharacter', character);
   };
 
   render() {
@@ -54,10 +65,12 @@ class Characters extends Component {
                 data={data.characters.results}
                 keyExtractor={item => item.id}
                 numColumns={2}
-                renderItem={({ item }) => (
-                  <GridItem>
-                    <Image source={{ uri: item.image }} />
-                    <Subtitle>{item.name}</Subtitle>
+                renderItem={({ item: character }) => (
+                  <GridItem
+                    onPress={() => this.handleCharacterClick(character)}
+                  >
+                    <Image source={{ uri: character.image }} />
+                    <Subtitle>{character.name}</Subtitle>
                   </GridItem>
                 )}
                 ListFooterComponent={
