@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 const Container = styled.View`
   flex-direction: row;
-  padding: 5px 0;
+  padding-top: 10px;
 `;
 
 const BoldText = styled.Text`

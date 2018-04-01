@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const FooterContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
-  padding: 15px 10px;
+  padding: 0px 10px;
 `;
 
 const FooterList = ({ currentPage, info, getNextPage, getPreviousPage }) => (

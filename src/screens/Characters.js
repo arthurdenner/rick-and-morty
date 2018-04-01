@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
-import { FlatList, Text, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 import PropTypes from 'prop-types';
-import { Connect, query } from 'urql';
-import { GridItem, FooterList, Header, Image, Subtitle } from '../components';
+import {
+  GridItem,
+  FooterList,
+  Header,
+  Image,
+  Query,
+  Subtitle,
+} from '../components';
 import { GET_CHARACTERS } from '../queries/character';
 import { windowHeight } from '../utils/dimensions';
 
@@ -46,44 +52,32 @@ class Characters extends Component {
     return (
       <View style={{ height: viewHeight }}>
         <Header>Characters</Header>
-        <Connect
-          query={query(GET_CHARACTERS, { page: currentPage })}
-          children={({ fetching, error, loaded, data }) => {
-            if (fetching || !loaded) {
-              return <Text style={{ paddingHorizontal: 10 }}>Loading...</Text>;
-            }
-
-            if (error) {
-              return (
-                <Text style={{ paddingHorizontal: 10 }}>Error: {error}</Text>
-              );
-            }
-
-            return (
-              <FlatList
-                ref={el => (this.flatlist = el)}
-                data={data.characters.results}
-                keyExtractor={item => item.id}
-                numColumns={2}
-                renderItem={({ item: character }) => (
-                  <GridItem
-                    onPress={() => this.handleCharacterClick(character)}
-                  >
-                    <Image source={{ uri: character.image }} />
-                    <Subtitle>{character.name}</Subtitle>
-                  </GridItem>
-                )}
-                ListFooterComponent={
-                  <FooterList
-                    currentPage={currentPage}
-                    info={data.characters.info}
-                    getNextPage={this.getNextPage}
-                    getPreviousPage={this.getPreviousPage}
-                  />
-                }
-              />
-            );
-          }}
+        <Query
+          dataPath="characters"
+          query={GET_CHARACTERS}
+          variables={{ page: currentPage }}
+          children={characters => (
+            <FlatList
+              ref={el => (this.flatlist = el)}
+              data={characters.results}
+              keyExtractor={item => item.id}
+              numColumns={2}
+              renderItem={({ item: character }) => (
+                <GridItem onPress={() => this.handleCharacterClick(character)}>
+                  <Image source={{ uri: character.image }} />
+                  <Subtitle>{character.name}</Subtitle>
+                </GridItem>
+              )}
+              ListFooterComponent={
+                <FooterList
+                  currentPage={currentPage}
+                  info={characters.info}
+                  getNextPage={this.getNextPage}
+                  getPreviousPage={this.getPreviousPage}
+                />
+              }
+            />
+          )}
         />
       </View>
     );
