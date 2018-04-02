@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -12,19 +12,31 @@ const BoldText = styled.Text`
   font-weight: 600;
 `;
 
-const ListItem = ({ label, value }) => (
+const LinkText = styled.Text`
+  color: #0074d9;
+`;
+
+const ListItem = ({ label, onPress, value }) => (
   <Container>
     <BoldText>{label}: </BoldText>
-    <Text>{value || 'Unknown'}</Text>
+    {value.id ? (
+      <TouchableOpacity onPress={() => onPress(value, label)}>
+        <LinkText>{value.name}</LinkText>
+      </TouchableOpacity>
+    ) : (
+      <Text>{value.name || value || 'Unknown'}</Text>
+    )}
   </Container>
 );
 
 ListItem.propTypes = {
   label: PropTypes.string.isRequired,
-  value: PropTypes.string,
+  onPress: PropTypes.func,
+  value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 };
 
 ListItem.defaultProps = {
+  onPress: () => {},
   value: 'Unknown',
 };
 

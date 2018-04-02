@@ -22,9 +22,11 @@ export const SINGLE_CHARACTER = `
       type
       status
       location {
+        id
         name
       }
       origin {
+        id
         name
       }
       gender
