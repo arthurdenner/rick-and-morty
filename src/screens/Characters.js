@@ -47,10 +47,9 @@ class Characters extends Component {
 
   render() {
     const { currentPage } = this.state;
-    const viewHeight = windowHeight - 20;
 
     return (
-      <View style={{ height: viewHeight }}>
+      <View style={{ height: windowHeight }}>
         <Header>Characters</Header>
         <Query
           dataPath="characters"

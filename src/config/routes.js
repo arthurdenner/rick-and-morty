@@ -1,5 +1,6 @@
 import { StackNavigator } from 'react-navigation';
 import Characters from '../screens/Characters';
+import List from '../screens/List';
 import Location from '../screens/Location';
 import SingleCharacter from '../screens/SingleCharacter';
 
@@ -10,6 +11,12 @@ const HomeStack = StackNavigator(
       navigationOptions: {
         header: () => null,
       },
+    },
+    List: {
+      screen: List,
+      navigationOptions: ({ navigation }) => ({
+        title: `${navigation.state.params.title}`,
+      }),
     },
     Location: {
       screen: Location,

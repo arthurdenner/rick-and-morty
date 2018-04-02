@@ -6,3 +6,20 @@ export const GET_LOCATION_BY_ID = `
     }
   }
 `;
+
+export const ALL_LOCATIONS = `
+  query allLocations($page: Int!) {
+    locations(page: $page) {
+      info {
+        count
+        pages
+        next
+        prev
+      }
+      results {
+        id
+        name
+      }
+    }
+  }
+`;
