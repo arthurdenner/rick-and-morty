@@ -4,8 +4,7 @@ import { windowWidth } from '../utils/dimensions';
 const GridItem = styled.TouchableOpacity`
   border-radius: 3px;
   justify-content: center;
-  padding: 0 10px;
-  margin-bottom: 10px;
+  padding: 15px 10px 0;
   width: ${windowWidth / 2};
 `;
 

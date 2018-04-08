@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, Text } from 'react-native';
+import { FlatList, ScrollView, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { FooterList, ListRow, Query } from '../components';
 
@@ -39,24 +39,25 @@ class List extends Component {
         {...params}
         variables={{ page: currentPage }}
         children={payload => (
-          <FlatList
-            ref={el => (this.flatlist = el)}
-            data={payload.results}
-            keyExtractor={item => item.id}
-            renderItem={({ item }) => (
-              <ListRow onPress={() => params.onListItem(item)}>
-                <Text>{item.name}</Text>
-              </ListRow>
-            )}
-            ListFooterComponent={
-              <FooterList
-                currentPage={currentPage}
-                info={payload.info}
-                getNextPage={this.getNextPage}
-                getPreviousPage={this.getPreviousPage}
-              />
-            }
-          />
+          <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+            <FlatList
+              ref={el => (this.flatlist = el)}
+              data={payload.results}
+              keyExtractor={item => item.id}
+              contentContainerStyle={{ flex: 1 }}
+              renderItem={({ item }) => (
+                <ListRow onPress={() => params.onListItem(item)}>
+                  <Text>{item.name}</Text>
+                </ListRow>
+              )}
+            />
+            <FooterList
+              currentPage={currentPage}
+              info={payload.info}
+              getNextPage={this.getNextPage}
+              getPreviousPage={this.getPreviousPage}
+            />
+          </ScrollView>
         )}
       />
     );

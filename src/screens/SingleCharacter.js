@@ -13,7 +13,7 @@ class SingleCharacter extends Component {
     if (label === 'Location' || label === 'Origin') {
       const { navigation: { navigate } } = this.props;
 
-      navigate('Location', value);
+      navigate('SingleLocation', value);
     }
   };
 

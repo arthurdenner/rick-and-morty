@@ -1,53 +1,48 @@
-import { StackNavigator } from 'react-navigation';
+import { DrawerNavigator, StackNavigator } from 'react-navigation';
 import Characters from '../screens/Characters';
-import List from '../screens/List';
-import Location from '../screens/Location';
+import Locations from '../screens/Locations';
 import SingleCharacter from '../screens/SingleCharacter';
+import SingleLocation from '../screens/SingleLocation';
 
-const HomeStack = StackNavigator(
-  {
-    Home: {
-      screen: Characters,
-      navigationOptions: {
-        header: () => null,
+const Navigation = DrawerNavigator({
+  CharactersFlow: {
+    screen: StackNavigator({
+      Characters: {
+        screen: Characters,
+        navigationOptions: {
+          title: 'Characters',
+        },
       },
-    },
-    List: {
-      screen: List,
-      navigationOptions: ({ navigation }) => ({
-        title: `${navigation.state.params.title}`,
-      }),
-    },
-    Location: {
-      screen: Location,
-      navigationOptions: ({ navigation }) => ({
-        title: `${navigation.state.params.name}`,
-      }),
-    },
-    SingleCharacter: {
-      screen: SingleCharacter,
-      navigationOptions: ({ navigation }) => ({
-        title: `${navigation.state.params.name}`,
-      }),
+      SingleCharacter: {
+        screen: SingleCharacter,
+        navigationOptions: ({ navigation }) => ({
+          title: `${navigation.state.params.name}`,
+        }),
+      },
+    }),
+    navigationOptions: {
+      title: 'Characters',
     },
   },
-  {
-    headerMode: 'screen',
-  }
-);
-
-const Navigation = StackNavigator(
-  {
-    Home: {
-      screen: HomeStack,
-      navigationOptions: {
-        header: () => null,
+  LocationsFlow: {
+    screen: StackNavigator({
+      Locations: {
+        screen: Locations,
+        navigationOptions: {
+          title: 'Locations',
+        },
       },
+      SingleLocation: {
+        screen: SingleLocation,
+        navigationOptions: ({ navigation }) => ({
+          title: `${navigation.state.params.name}`,
+        }),
+      },
+    }),
+    navigationOptions: {
+      title: 'Locations',
     },
   },
-  {
-    mode: 'modal',
-  }
-);
+});
 
 export default Navigation;
